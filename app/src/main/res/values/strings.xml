@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">app_name</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login_action">Войти</string>
+    <string name="register">Регистрация</string>
+    <string name="login_title">Вход в аккаунт</string>
+
+    <string name="home">Главная</string>
+    <string name="brands">Бренды</string>
+    <string name="favorites">Избранное</string>
+    <string name="profile">Профиль</string>
+
+    <string name="add">Добавить в корзину</string>
+
+
+</resources>

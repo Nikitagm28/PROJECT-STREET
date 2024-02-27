@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Заголовок с иконкой -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/backIcon"
+            android:layout_width="31dp"
+            android:layout_height="28dp"
+            android:src="@drawable/basket" /> <!-- Замените на ваше изображение стрелки назад -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/robotolight"
+            android:textColor="#000000"
+            android:textSize="32sp"
+            android:text="Корзина"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </LinearLayout>
+
+    <!-- Кнопка "Удалить выбранные" с иконкой -->
+    <LinearLayout
+        android:id="@+id/btnDeleteSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@id/header"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:src="@drawable/cancelbasket" /> <!-- Замените на ваше изображение крестика -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/robotobold"
+            android:textColor="#9C9C9C"
+            android:textSize="15sp"
+            android:text="Удалить выбранные"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </LinearLayout>
+
+    <!-- Кнопка "Выбрать все" -->
+    <TextView
+        android:id="@+id/btnSelectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/btnDeleteSelected"
+        android:layout_marginStart="100dp"
+        android:layout_alignTop="@id/btnDeleteSelected"
+        android:fontFamily="@font/robotobold"
+        android:textSize="15sp"
+        android:textColor="#9C9C9C"
+        android:text="Выбрать все"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+</RelativeLayout>
+
+

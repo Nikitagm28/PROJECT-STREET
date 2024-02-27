@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="flatactionbutton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:background">@color/green</item>
+        <item name="android:textColor">#000000</item>
+        <!-- Другие стилевые атрибуты -->
+    </style>
+    <style name="SizeButtonStyle">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">#FFFFFF</item>
+
+    </style>
+
+</resources>

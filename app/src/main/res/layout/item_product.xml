@@ -1,0 +1,357 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/brandLogo"
+                android:layout_width="234dp"
+                android:layout_height="131dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/yumms" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brandLogo"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage1"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/product12" />
+
+                    <ImageButton
+                        android:id="@+id/favoriteButton1"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage1"
+                        android:text="FW23 PUFFER JACKET in BLACK"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/productPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productName1"
+                        android:text="17 000 Р"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:layout_marginTop="0dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage2"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/puffer" />
+                    <ImageButton
+                        android:id="@+id/favoriteButton"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="@null"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage2"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:text="FW23 PUFFER JACKET in LIGHT GRAY"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/robotobold"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/productPrice2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:layout_below="@id/productName2"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="18sp"
+                        android:text="17 000 Р"
+                        android:gravity="center"
+                        android:layout_marginTop="0dp"/>
+
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brandLogo"
+                android:orientation="horizontal"
+                android:layout_marginTop="332dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage1"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/zipka" />
+
+                    <ImageButton
+                        android:id="@+id/favoriteButton1"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage1"
+                        android:text="MMTV ZIP-HOODIE in BLACK"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/productPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productName1"
+                        android:text="7 000 Р"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:layout_marginTop="0dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage2"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/shirt" />
+                    <ImageButton
+                        android:id="@+id/favoriteButton"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="@null"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage2"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:text="MONOGRAM SHIRT in BLACK"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/robotobold"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/productPrice2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:layout_below="@id/productName2"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="18sp"
+                        android:text="6 000 Р"
+                        android:gravity="center"
+                        android:layout_marginTop="0dp"/>
+
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brandLogo"
+                android:orientation="horizontal"
+                android:layout_marginTop="632dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage1"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/rari" />
+
+                    <ImageButton
+                        android:id="@+id/favoriteButton1"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage1"
+                        android:text="MMTV ZIP-HOODIE in BLACK"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/productPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productName1"
+                        android:text="2 900 Р"
+                        android:gravity="center"
+                        android:fontFamily="@font/robotobold"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:layout_marginTop="0dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/productImage2"
+                        android:layout_width="match_parent"
+                        android:layout_height="174dp"
+                        android:src="@drawable/doves" />
+                    <ImageButton
+                        android:id="@+id/favoriteButton"
+                        android:layout_width="49dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="@null"
+                        android:src="@drawable/selector_favorite" />
+
+                    <TextView
+                        android:id="@+id/productName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/productImage2"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:text="DOVES TEE in LIGHT BLUE"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/robotobold"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/productPrice2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:layout_below="@id/productName2"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="18sp"
+                        android:text="2 900 Р"
+                        android:gravity="center"
+                        android:layout_marginTop="0dp"/>
+
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#FFFFFF"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
