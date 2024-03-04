@@ -9,7 +9,7 @@
 
     <string name="home">Главная</string>
     <string name="brands">Бренды</string>
-    <string name="favorites">Избранное</string>
+    <string name="favorites">Корзина</string>
     <string name="profile">Профиль</string>
 
     <string name="add">Добавить в корзину</string>

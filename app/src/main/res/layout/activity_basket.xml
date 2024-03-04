@@ -85,6 +85,11 @@
 
             <!-- Элемент списка товаров, повторите этот блок для каждого товара -->
             <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
 
 
             <!-- Добавьте столько <include> блоков, сколько у вас товаров -->
