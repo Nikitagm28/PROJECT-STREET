@@ -11,7 +11,7 @@
         android:textColor="#FF0000"
         android:title="@string/brands" />
     <item
-        android:id="@+id/navigation_favorites"
+        android:id="@+id/navigation_basket"
         android:icon="@drawable/basketnav"
         android:textColor="#000000"
         android:title="@string/favorites" />

@@ -17,6 +17,7 @@
         <activity android:name=".BrandsActivity" />
         <activity android:name=".LoginActivity"/>
         <activity android:name=".ProductActivity"/>
+        <activity android:name=".BasketActivity" />
 
         <activity
             android:name=".AuthenticationActivity"

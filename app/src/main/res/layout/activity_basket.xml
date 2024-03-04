@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:padding="16dp">
 
@@ -73,10 +74,11 @@
 
     <!-- Список товаров -->
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/btnDeleteSelected"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,6 +92,7 @@
             <include layout="@layout/product_item" />
             <include layout="@layout/product_item" />
             <include layout="@layout/product_item" />
+            <include layout="@layout/product_item" />
 
 
             <!-- Добавьте столько <include> блоков, сколько у вас товаров -->
@@ -97,4 +100,13 @@
         </LinearLayout>
     </ScrollView>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:menu="@menu/bottom_navigation_menu" />
 </RelativeLayout>
