@@ -10,7 +10,7 @@ class BasketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_basket) // Убедитесь, что здесь указан правильный layout
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.setSelectedItemId(R.id.navigation_basket) // Устанавливаем нужный пункт меню как выбранный
+        bottomNavigation.selectedItemId = R.id.navigation_basket // Устанавливаем нужный пункт меню как выбранный
 
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
