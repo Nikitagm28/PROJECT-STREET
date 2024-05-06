@@ -45,6 +45,8 @@ class BrandsActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
                     // Код для перехода на активность профиля
+                    val settingsIntent = Intent(this, SettingActivity::class.java)
+                    startActivity(settingsIntent)
                     true
                 }
                 else -> false

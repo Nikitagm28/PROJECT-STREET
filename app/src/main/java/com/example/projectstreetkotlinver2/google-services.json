@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682618029844",
+    "project_id": "project-street-mob",
+    "storage_bucket": "project-street-mob.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682618029844:android:e3653bd010268caf7ba401",
+        "android_client_info": {
+          "package_name": "com.example.projectstreetkotlinver2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnMB3R1MZLFkZO4VQXfQJAZ_6e0iUDdj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
