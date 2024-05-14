@@ -4,287 +4,224 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:padding="16dp">
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="450dp"
-        android:layout_marginTop="0dp"
-        android:padding="20dp">
-
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="650dp"
-            android:layout_height="450dp" />
-
-
-        <ImageButton
-            android:id="@+id/back_button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="-10dp"
-            android:layout_marginTop="10dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/backbutton2" />
-
-        <ImageButton
-            android:id="@+id/share_button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="0dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/share" />
-    </RelativeLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabDots"
-        android:layout_width="28dp"
-        android:layout_height="15dp"
-        android:layout_gravity="center_horizontal"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorFullWidth="false"
-        android:layout_marginTop="-20dp"
-        app:tabIndicatorHeight="0dp">
-
-        <!-- Временные элементы для визуализации в режиме дизайна -->
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        </com.google.android.material.tabs.TabLayout>
-
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:padding="16dp">
 
-        <!-- Название и цена продукта -->
-        <LinearLayout
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:padding="20dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="-10dp"
+                android:layout_marginTop="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/backbutton2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/product_name"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
+            <!-- Название и цена продукта -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
-                android:layout_marginStart="15dp"
-                android:gravity="center_vertical"
-                android:text="FMM HOODIE in BLACK"
-                android:textColor="#000000"
-                android:textSize="22dp" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/product_price"
-                android:layout_marginTop="2dp"
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotobold"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/product_price"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotobold"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <!-- Вертикальный LinearLayout для изображения и кнопки LOOK BOOK -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
                 android:gravity="center_vertical"
-                android:layout_marginStart="15dp"
-                android:text="6 000 ₽"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/brands"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/robotobold"
-                android:gravity="center_horizontal"
-                android:layout_marginStart="15dp"
-                android:text="Brand: Yumms"
-                android:textColor="#9C9C9C"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/plus"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="20dp" />
+
+                <Button
+                    android:id="@+id/lookbook_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/robotobold"
+                    android:text="LOOK BOOK"
+                    android:textColor="#000000"
+                    android:textSize="16dp" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Вертикальный LinearLayout для изображения и кнопки LOOK BOOK -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-
-            <ImageView
-                android:id="@+id/lookbook_image"
-                android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/plus" />
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
 
             <Button
-                android:id="@+id/lookbook_button"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:background="?android:attr/selectableItemBackground"
+                android:id="@+id/sizeXS"
+                style="@style/SizeButtonStyle"
+                android:layout_width="50dp"
+                android:background="@drawable/button_border"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/robotobold"
-                android:text="LOOK BOOK"
-                android:textColor="#000000"
-                android:textSize="16dp" />
+                android:text="XS" />
 
+            <Button
+                android:id="@+id/sizeS"
+                style="@style/SizeButtonStyle"
+                android:layout_width="50dp"
+                android:background="@drawable/button_border"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:text="S" />
+
+            <Button
+                android:id="@+id/sizeM"
+                style="@style/SizeButtonStyle"
+                android:layout_width="50dp"
+                android:background="@drawable/button_border"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:text="M" />
+
+            <Button
+                android:id="@+id/sizeL"
+                android:layout_width="50dp"
+                android:background="@drawable/button_border"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:text="L"
+                style="@style/SizeButtonStyle" />
+
+            <Button
+                android:id="@+id/sizeXL"
+                android:layout_width="50dp"
+                android:background="@drawable/button_border"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:text="XL"
+                style="@style/SizeButtonStyle" />
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/sizeXS"
-            style="@style/SizeButtonStyle"
-            android:layout_width="50dp"
-            android:background="@drawable/button_border"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:text="XS" />
-
-        <Button
-            android:id="@+id/sizeS"
-            style="@style/SizeButtonStyle"
-            android:layout_width="50dp"
-            android:background="@drawable/button_border"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:text="S" />
-
-        <Button
-            android:id="@+id/sizeM"
-            style="@style/SizeButtonStyle"
-            android:layout_width="50dp"
-            android:background="@drawable/button_border"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:text="M" />
-
-        <Button
-            android:id="@+id/sizeL"
-            android:layout_width="50dp"
-            android:background="@drawable/button_border"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:text="L"
-            style="@style/SizeButtonStyle"/>
-
-        <Button
-            android:id="@+id/sizeXL"
-            android:layout_width="50dp"
-            android:background="@drawable/button_border"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:text="XL"
-            style="@style/SizeButtonStyle"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <Button
-            android:id="@+id/add_to_cart_button"
-            android:layout_marginTop="16dp"
-            android:layout_width="248dp"
-            android:layout_height="51dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/button_add"
-            android:fontFamily="@font/robotobold"
-            android:text="Добавить в корзину"
-            android:layout_marginStart="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="0dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:drawableTop="@drawable/follow"
-            android:drawablePadding="4dp"
-            android:fontFamily="@font/robotobold"
-            android:gravity="center"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
-            android:text="SAVED"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
-    <!-- Родительский LinearLayout для кнопки и текста описания -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/description_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Описание"
-            android:drawableEnd="@drawable/disdown"
-            android:drawablePadding="8dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="30dp"
-            android:gravity="start|center_vertical"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"
-            android:fontFamily="@font/robotobold"/>
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/description_text"
+            <Button
+                android:id="@+id/add_to_cart_button"
+                android:layout_marginTop="16dp"
+                android:layout_width="248dp"
+                android:layout_height="51dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_add"
+                android:fontFamily="@font/robotobold"
+                android:text="Добавить в корзину"
+                android:layout_marginStart="15dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawableTop="@drawable/follow"
+                android:drawablePadding="4dp"
+                android:fontFamily="@font/robotobold"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="SAVED"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Родительский LinearLayout для кнопки и текста описания -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/robotobold"
-            android:textColor="#000000"
-            android:visibility="gone"
-            android:text="Ткань: футер 3-х нитка 340гр
-Лекала: умеренный оверсайз
-Принт: шелкография
-Размеры: S / M / L / XL / XXL
+            android:orientation="vertical">
 
-Указания по стирке: стирать на 30 градусах
-Указания по размерам:
-S - рост 165-170см
-М - рост 170-180см
-L - рост 180-185см
-XL - рост 185+см
-XXL - рост 190+см
+            <Button
+                android:id="@+id/description_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Описание"
+                android:drawableEnd="@drawable/disdown"
+                android:drawablePadding="8dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="30dp"
+                android:gravity="start|center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"
+                android:fontFamily="@font/robotobold" />
 
-Готовое изделие может незначительно отличаться от макета на фото."
-            android:padding="16dp"/>
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:textColor="#000000"
+                android:visibility="gone"
+                android:padding="16dp" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
 </ScrollView>

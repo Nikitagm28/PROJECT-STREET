@@ -1,42 +1,56 @@
 package com.example.projectstreetkotlinver2
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class ProductActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
-    private val imageList = listOf(R.drawable.zipka, R.drawable.zipka2) // Убедитесь, что эти изображения существуют в вашем каталоге drawable
+    private lateinit var product: Product
+    private lateinit var productName: TextView
+    private lateinit var productPrice: TextView
+    private lateinit var descriptionText: TextView
+    private lateinit var selectedSize: String
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
 
+        sharedPreferences = getSharedPreferences("basket_prefs", Context.MODE_PRIVATE)
+
+        // Получение данных о товаре из Intent
+        product = intent.getSerializableExtra("product") as Product
+
         // Настройка ViewPager2 с адаптером для изображений
         viewPager = findViewById(R.id.viewPager)
-        viewPager.adapter = ImageViewPagerAdapter(imageList)
+        viewPager.adapter = ImageViewPagerAdapter(listOf(product.image)) // Используем URL изображения из продукта
 
-        // Настройка TabLayout как индикатора для ViewPager2
-        tabLayout = findViewById(R.id.tabDots)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // Здесь можно оставить пустым, так как индикаторы будут управляться селектором
-        }.attach()
+        // Настройка элементов интерфейса
+        productName = findViewById(R.id.product_name)
+        productPrice = findViewById(R.id.product_price)
+        descriptionText = findViewById(R.id.description_text)
+
+        // Установка данных о товаре
+        productName.text = product.name
+        productPrice.text = "${product.price} Р"
+        descriptionText.text = product.description
 
         // Настройка кнопки и текстового поля для описания продукта
         val descriptionButton: Button = findViewById(R.id.description_button)
-        val descriptionText: TextView = findViewById(R.id.description_text)
-
         descriptionButton.setOnClickListener {
             // Переключение видимости текста описания
             if (descriptionText.visibility == View.GONE) {
@@ -47,25 +61,80 @@ class ProductActivity : AppCompatActivity() {
                 descriptionButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.disdown, 0) // Иконка, когда текст скрыт
             }
         }
+
+        // Настройка выбора размера
+        val sizeButtons = listOf<Button>(
+            findViewById(R.id.sizeXS),
+            findViewById(R.id.sizeS),
+            findViewById(R.id.sizeM),
+            findViewById(R.id.sizeL),
+            findViewById(R.id.sizeXL)
+        )
+
+        for (button in sizeButtons) {
+            button.setOnClickListener {
+                selectSize(button, sizeButtons)
+            }
+        }
+
+        // Настройка кнопки "Добавить в корзину"
+        val addToCartButton: Button = findViewById(R.id.add_to_cart_button)
+        addToCartButton.setOnClickListener {
+            addToCart()
+        }
     }
 
-    class ImageViewPagerAdapter(private val images: List<Int>) : RecyclerView.Adapter<ImageViewPagerAdapter.ViewHolder>() {
+    private fun selectSize(selectedButton: Button, sizeButtons: List<Button>) {
+        for (button in sizeButtons) {
+            button.isSelected = false
+        }
+        selectedButton.isSelected = true
+        selectedSize = selectedButton.text.toString()
+    }
+
+    private fun addToCart() {
+        if (::selectedSize.isInitialized) {
+            // Логика добавления товара с выбранным размером в корзину
+            Toast.makeText(this, "Товар добавлен в корзину с размером $selectedSize", Toast.LENGTH_SHORT).show()
+            product.selectedSize = selectedSize
+            saveProductToBasket(product)
+        } else {
+            Toast.makeText(this, "Пожалуйста, выберите размер", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveProductToBasket(product: Product) {
+        val basketItems = getBasketItems().toMutableList()
+        basketItems.add(product)
+        val json = Gson().toJson(basketItems)
+        sharedPreferences.edit().putString("basket_items", json).apply()
+    }
+
+    private fun getBasketItems(): List<Product> {
+        val json = sharedPreferences.getString("basket_items", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<Product>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            emptyList()
+        }
+    }
+
+    class ImageViewPagerAdapter(private val images: List<String>) : RecyclerView.Adapter<ImageViewPagerAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val imageView: ImageView = view.findViewById(R.id.imageView)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            // Используйте layout inflater для инфляции вашего custom layout
             val view = LayoutInflater.from(parent.context).inflate(R.layout.image_item, parent, false)
             return ViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.imageView.setImageResource(images[position])
+            Picasso.get().load(images[position]).into(holder.imageView)
         }
 
         override fun getItemCount(): Int = images.size
     }
-
 }

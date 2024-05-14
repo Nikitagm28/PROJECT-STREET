@@ -2,49 +2,39 @@ package com.example.projectstreetkotlinver2
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.projectstreetkotlinver2.network.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BrandsActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var productAdapter: ProductAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_product)
 
-        // Кнопка добавления в избранное
-        val favoriteButton: ImageButton = findViewById(R.id.favoriteButton)
-        favoriteButton.setOnClickListener {
-            it.isSelected = !it.isSelected
-        }
-
-        // Настройка ImageView для перехода на страницу продукта
-        val imageView: ImageView = findViewById(R.id.productImage2)
-        imageView.setOnClickListener {
-            val productIntent = Intent(this, ProductActivity::class.java)
-            startActivity(productIntent)
-        }
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this, 2) // Устанавливаем 2 столбца
 
         // Обработка нажатий элементов BottomNavigationView
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation) // Убедитесь, что у вас есть элемент с идентификатором bottom_navigation в вашем layout
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home -> {
-                    // Код для перехода на главную активность
-                    true
-                }
-                R.id.navigation_brands -> {
-                    // Код для перехода на активность брендов
-                    true
-                }
+                R.id.navigation_home -> true
+                R.id.navigation_brands -> true
                 R.id.navigation_basket -> {
-                    // Переход на активность корзины
                     val basketIntent = Intent(this, BasketActivity::class.java)
                     startActivity(basketIntent)
                     true
                 }
                 R.id.navigation_profile -> {
-                    // Код для перехода на активность профиля
                     val settingsIntent = Intent(this, SettingActivity::class.java)
                     startActivity(settingsIntent)
                     true
@@ -52,5 +42,25 @@ class BrandsActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        fetchProducts()
+    }
+
+    private fun fetchProducts() {
+        val apiService = RetrofitClient.apiService
+        apiService.getProducts().enqueue(object : Callback<List<Product>> {
+            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { products ->
+                        productAdapter = ProductAdapter(products)
+                        recyclerView.adapter = productAdapter
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
     }
 }
