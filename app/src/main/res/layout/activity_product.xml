@@ -64,7 +64,7 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <!-- Вертикальный LinearLayout для изображения и кнопки LOOK BOOK -->
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
