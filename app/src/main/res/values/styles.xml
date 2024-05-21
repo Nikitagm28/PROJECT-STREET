@@ -12,6 +12,9 @@
         <item name="android:textSize">20sp</item>
         <item name="android:background">#FFFFFF</item>
     </style>
-
+    <style name="RoundedAvatar">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">60%</item>
+    </style>
 
 </resources>

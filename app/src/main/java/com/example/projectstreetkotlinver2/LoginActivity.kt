@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         // Устанавливаем слушатель нажатия на кнопку
         enterButton.setOnClickListener {
             // Создаем намерение для запуска LoginActivity
-            val brandsIntent = Intent(this, BrandsActivity::class.java)
+            val brandsIntent = Intent(this, BasicActivity::class.java)
             // Запускаем LoginActivity
             startActivity(brandsIntent)
         }

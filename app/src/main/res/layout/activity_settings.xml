@@ -1,232 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:padding="24dp">
+    tools:context=".SettingsActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ava"
-        app:civ_border_width="0dp"
-        app:civ_border_color="#FF000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
-
-    <TextView
-        android:id="@+id/profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Никита Кузнецов"
-        android:fontFamily="@font/robotobold"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/profile_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/profile_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="nikita-kuznetsov-2018@list.ru"
-        android:fontFamily="@font/robotolight"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/profile_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Кнопки -->
-    <LinearLayout
-        android:id="@+id/settings_container"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/profile_email"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="80dp">
+        android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingVertical="12dp">
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ava"
+                app:civ_border_width="0dp"
+                app:civ_border_color="#FF000000"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
 
             <TextView
-                android:id="@+id/text_order_lookbook"
-                android:layout_width="0dp"
-                android:fontFamily="@font/robotobold"
-                android:textSize="16sp"
-                android:textColor="#000000"
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Look Book"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <ImageView
-                android:id="@+id/icon_order_lookbook"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/look_book" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
-
-
-        <!-- Кнопка История заказов -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingVertical="12dp">
+                android:text="Никита Кузнецов"
+                android:fontFamily="@font/robotobold"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:layout_gravity="center" />
 
             <TextView
-                android:id="@+id/text_order_history"
-                android:layout_width="0dp"
-                android:fontFamily="@font/robotobold"
+                android:id="@+id/profile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nikita-kuznetsov-2018@list.ru"
+                android:fontFamily="@font/robotolight"
                 android:textSize="16sp"
                 android:textColor="#000000"
+                android:layout_gravity="center" />
+
+            <!-- Кнопки -->
+            <LinearLayout
+                android:id="@+id/settings_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="История заказов"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                android:orientation="vertical"
+                android:layout_marginTop="32dp">
 
-            <ImageView
-                android:id="@+id/icon_order_history"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/history" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:id="@+id/text_order_lookbook"
+                        android:layout_width="0dp"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Look Book"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_order_lookbook"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/look_book" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <!-- Кнопка История заказов -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:id="@+id/text_order_history"
+                        android:layout_width="0dp"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="История заказов"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_order_history"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/history" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <!-- Кнопка Избранное -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="12dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/text_favorites"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:text="Избранное"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_favorites"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/favorite_settings" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="12dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/text_settings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:text="Настройки"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_settings"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/settings" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="12dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/text_support"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/robotobold"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:text="Служба поддержки"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_support"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/support" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
-
-        <!-- Кнопка Избранное -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:id="@+id/text_favorites"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/robotobold"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:text="Избранное"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <ImageView
-                android:id="@+id/icon_favorites"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/favorite_settings" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:id="@+id/text_settings"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/robotobold"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:text="Настройки"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <ImageView
-                android:id="@+id/icon_settings"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/settings" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:id="@+id/text_support"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/robotobold"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:text="Служба поддержки"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <ImageView
-                android:id="@+id/icon_support"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/support" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
-
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

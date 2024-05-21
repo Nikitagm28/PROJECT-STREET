@@ -1,4 +1,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/checked_image" android:state_checked="true"/>
-    <item android:drawable="@drawable/unchecked_image" android:state_checked="false"/>
+    <item android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="#28A745"/>
+        </shape>
+    </item>
+    <item android:state_checked="false">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent"/>
+            <stroke android:width="2dp" android:color="#000000"/>
+        </shape>
+    </item>
 </selector>

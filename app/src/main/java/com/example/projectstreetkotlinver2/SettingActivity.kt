@@ -1,18 +1,21 @@
 package com.example.projectstreetkotlinver2
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class SettingActivity : AppCompatActivity() {
-
-    private lateinit var settingsRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        findViewById<TextView>(R.id.text_favorites).setOnClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+        }
 
         // Настройка BottomNavigationView
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -21,25 +24,24 @@ class SettingActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    // Ваш код для перехода на главную активность
+                    val intent = Intent(this, BasicActivity::class.java)
+                    startActivity(intent)
                     true
                 }
-
                 R.id.navigation_brands -> {
-                    // Ваш код для перехода на активность брендов
+                    val intent = Intent(this, BrandsActivity::class.java)
+                    startActivity(intent)
                     true
                 }
-
                 R.id.navigation_basket -> {
-                    // Ваш код для перехода на активность корзины
+                    val intent = Intent(this, BasketActivity::class.java)
+                    startActivity(intent)
                     true
                 }
-
                 R.id.navigation_profile -> {
-                    // Игнорировать, если уже находимся на странице профиля
-                    false
+                    // Уже находимся на странице профиля
+                    true
                 }
-
                 else -> false
             }
         }

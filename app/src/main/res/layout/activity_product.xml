@@ -24,15 +24,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />
 
-            <ImageButton
-                android:id="@+id/back_button"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="10dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:src="@drawable/backbutton2" />
-
         </RelativeLayout>
 
         <LinearLayout
@@ -111,7 +102,7 @@
                 android:layout_width="50dp"
                 android:background="@drawable/button_border"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/robotolight"
                 android:text="XS" />
 
             <Button
@@ -120,7 +111,7 @@
                 android:layout_width="50dp"
                 android:background="@drawable/button_border"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/robotolight"
                 android:text="S" />
 
             <Button
@@ -129,24 +120,24 @@
                 android:layout_width="50dp"
                 android:background="@drawable/button_border"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/robotolight"
                 android:text="M" />
 
             <Button
                 android:id="@+id/sizeL"
                 android:layout_width="50dp"
-                android:background="@drawable/button_border"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/robotolight"
                 android:text="L"
-                style="@style/SizeButtonStyle" />
+                style="@style/SizeButtonStyle"
+                android:background="@drawable/button_border" />
 
             <Button
                 android:id="@+id/sizeXL"
                 android:layout_width="50dp"
                 android:background="@drawable/button_border"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
+                android:fontFamily="@font/robotolight"
                 android:text="XL"
                 style="@style/SizeButtonStyle" />
         </LinearLayout>
@@ -161,7 +152,7 @@
             <Button
                 android:id="@+id/add_to_cart_button"
                 android:layout_marginTop="16dp"
-                android:layout_width="248dp"
+                android:layout_width="288dp"
                 android:layout_height="51dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_add"
@@ -171,26 +162,14 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="0dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableTop="@drawable/follow"
-                android:drawablePadding="4dp"
-                android:fontFamily="@font/robotobold"
-                android:gravity="center"
-                android:paddingStart="8dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="8dp"
-                android:text="SAVED"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="14sp" />
+            <ImageButton
+                android:id="@+id/favoriteButton"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/fav"
+                android:scaleType="fitCenter" />
         </LinearLayout>
 
         <!-- Родительский LinearLayout для кнопки и текста описания -->

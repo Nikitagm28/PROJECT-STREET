@@ -1,32 +1,30 @@
 package com.example.projectstreetkotlinver2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projectstreetkotlinver2.network.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-class BrandsActivity : AppCompatActivity() {
+class FavoritesActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var productAdapter: ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.item_product) // Обновите здесь макет
+        setContentView(R.layout.activity_favorites)
 
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = GridLayoutManager(this, 2) // Устанавливаем 2 столбца
+        recyclerView = findViewById(R.id.recyclerViewFavorites)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         // Обработка нажатий элементов BottomNavigationView
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.navigation_brands
-        bottomNavigation.selectedItemId = R.id.navigation_brands
+        bottomNavigation.selectedItemId = R.id.navigation_profile
 
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -54,24 +52,22 @@ class BrandsActivity : AppCompatActivity() {
             }
         }
 
-        fetchProducts()
+        loadFavoriteProducts()
     }
 
-    private fun fetchProducts() {
-        val apiService = RetrofitClient.apiService
-        apiService.getProducts().enqueue(object : Callback<List<Product>> {
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { products ->
-                        productAdapter = ProductAdapter(products)
-                        recyclerView.adapter = productAdapter
-                    }
-                }
-            }
+    private fun loadFavoriteProducts() {
+        // Загрузить избранные товары из SharedPreferences или базы данных
+        // Здесь предполагается, что избранные товары хранятся в SharedPreferences
+        val sharedPreferences = getSharedPreferences("favorites_prefs", Context.MODE_PRIVATE)
+        val json = sharedPreferences.getString("favorite_items", null)
+        val products: List<Product> = if (json != null) {
+            val type = object : TypeToken<List<Product>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            emptyList()
+        }
 
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+        productAdapter = ProductAdapter(products)
+        recyclerView.adapter = productAdapter
     }
 }

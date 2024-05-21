@@ -25,6 +25,7 @@ class ProductActivity : AppCompatActivity() {
     private lateinit var descriptionText: TextView
     private lateinit var selectedSize: String
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var addToCartButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class ProductActivity : AppCompatActivity() {
         productName = findViewById(R.id.product_name)
         productPrice = findViewById(R.id.product_price)
         descriptionText = findViewById(R.id.description_text)
+        addToCartButton = findViewById(R.id.add_to_cart_button)
 
         // Установка данных о товаре
         productName.text = product.name
@@ -78,7 +80,6 @@ class ProductActivity : AppCompatActivity() {
         }
 
         // Настройка кнопки "Добавить в корзину"
-        val addToCartButton: Button = findViewById(R.id.add_to_cart_button)
         addToCartButton.setOnClickListener {
             addToCart()
         }
@@ -87,19 +88,19 @@ class ProductActivity : AppCompatActivity() {
     private fun selectSize(selectedButton: Button, sizeButtons: List<Button>) {
         for (button in sizeButtons) {
             button.isSelected = false
+            button.setBackgroundResource(R.drawable.button_border)
         }
         selectedButton.isSelected = true
+        selectedButton.setBackgroundResource(R.drawable.button_border)
         selectedSize = selectedButton.text.toString()
     }
 
     private fun addToCart() {
         if (::selectedSize.isInitialized) {
             // Логика добавления товара с выбранным размером в корзину
-            Toast.makeText(this, "Товар добавлен в корзину с размером $selectedSize", Toast.LENGTH_SHORT).show()
             product.selectedSize = selectedSize
             saveProductToBasket(product)
-        } else {
-            Toast.makeText(this, "Пожалуйста, выберите размер", Toast.LENGTH_SHORT).show()
+            addToCartButton.text = "В корзине"
         }
     }
 
