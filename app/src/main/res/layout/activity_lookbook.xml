@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Создать образ"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/productsCarousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+        <ImageView
+            android:id="@+id/shirtItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/shirt"
+            android:contentDescription="Футболка"
+            android:tag="shirt" />
+
+        <ImageView
+            android:id="@+id/pantsItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/pants_grey"
+            android:contentDescription="Штаны"
+            android:tag="pants" />
+
+        <ImageView
+            android:id="@+id/hatItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/rari"
+            android:contentDescription="Шляпа"
+            android:tag="hat" />
+
+        <ImageView
+            android:id="@+id/shoesItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/pants_grey"
+            android:contentDescription="Обувь"
+            android:tag="shoes" />
+
+        <ImageView
+            android:id="@+id/jacketItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/puffer"
+            android:contentDescription="Куртка"
+            android:tag="jacket" />
+
+        <ImageView
+            android:id="@+id/scarfItem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/shirt"
+            android:contentDescription="Шарф"
+            android:tag="scarf" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lookContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/productsCarousel"
+        app:layout_constraintBottom_toTopOf="@id/saveLookButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/white"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/topSection"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/bottomSection"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/shoesSection"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveLookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сохранить образ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
