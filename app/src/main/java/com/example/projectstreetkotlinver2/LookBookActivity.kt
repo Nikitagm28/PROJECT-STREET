@@ -30,7 +30,7 @@ class LookBookActivity : AppCompatActivity() {
         val jacketItem: ImageView = findViewById(R.id.jacketItem)
         val scarfItem: ImageView = findViewById(R.id.scarfItem)
 
-        // Установка слушателей для начала перетаскивания
+
         setTouchListener(shirtItem)
         setTouchListener(pantsItem)
         setTouchListener(hatItem)
@@ -38,7 +38,7 @@ class LookBookActivity : AppCompatActivity() {
         setTouchListener(jacketItem)
         setTouchListener(scarfItem)
 
-        // Установка слушателей для областей, в которые можно перетаскивать элементы
+
         setDragListener(topSection)
         setDragListener(bottomSection)
         setDragListener(shoesSection)

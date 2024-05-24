@@ -23,7 +23,7 @@ class BasicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.recyclerViewNewArrivals)
-        recyclerView.layoutManager = GridLayoutManager(this, 2) // Сетка с двумя столбцами
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_home
@@ -49,7 +49,6 @@ class BasicActivity : AppCompatActivity() {
             }
         }
 
-        // Добавление обработчика клика для YUMMS
         val yummsImageView: ImageView = findViewById(R.id.yumms)
         yummsImageView.setOnClickListener {
             val intent = Intent(this, BrandsActivity::class.java)
@@ -62,7 +61,7 @@ class BasicActivity : AppCompatActivity() {
     private fun fetchProducts() {
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url("http://51.250.54.133:8000/api/products/") // Замените на актуальный URL API
+            .url("http://51.250.54.133:8000/api/products/")
             .build()
 
         client.newCall(request).enqueue(object : Callback {

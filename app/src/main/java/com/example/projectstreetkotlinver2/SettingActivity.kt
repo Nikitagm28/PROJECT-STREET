@@ -12,19 +12,19 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        // Слушатель для Избранного
+
         findViewById<TextView>(R.id.text_favorites).setOnClickListener {
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
         }
 
-        // Слушатель для Look Book
+
         findViewById<TextView>(R.id.text_order_lookbook).setOnClickListener {
             val intent = Intent(this, LookBookActivity::class.java)
             startActivity(intent)
         }
 
-        // Настройка BottomNavigationView
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_profile
 
@@ -46,7 +46,7 @@ class SettingActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
-                    // Уже находимся на странице профиля
+
                     true
                 }
                 else -> false

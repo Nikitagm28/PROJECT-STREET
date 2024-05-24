@@ -9,26 +9,26 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private val splashTimeOut: Long = 2000 // Задержка в миллисекундах (2000 мс = 2 секунды)
+    private val splashTimeOut: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Найти ImageView по ID
+
         val logoImageView = findViewById<ImageView>(R.id.imageViewLogo)
 
-        // Загрузить анимацию из ресурсов
+
         val scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_animation)
 
-        // Применить анимацию к ImageView
+
         logoImageView.startAnimation(scaleAnimation)
 
         Handler().postDelayed({
-            // Запуск AuthenticationActivity после задержки
+
             val intent = Intent(this@SplashActivity, LoginActivity::class.java)
             startActivity(intent)
-            // Закрыть текущую Activity
+
             finish()
         }, splashTimeOut)
     }

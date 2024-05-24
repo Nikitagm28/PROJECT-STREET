@@ -22,7 +22,7 @@ class FavoritesActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewFavorites)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        // Обработка нажатий элементов BottomNavigationView
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_profile
 
@@ -56,8 +56,7 @@ class FavoritesActivity : AppCompatActivity() {
     }
 
     private fun loadFavoriteProducts() {
-        // Загрузить избранные товары из SharedPreferences или базы данных
-        // Здесь предполагается, что избранные товары хранятся в SharedPreferences
+
         val sharedPreferences = getSharedPreferences("favorites_prefs", Context.MODE_PRIVATE)
         val json = sharedPreferences.getString("favorite_items", null)
         val products: List<Product> = if (json != null) {

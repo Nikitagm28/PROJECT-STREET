@@ -12,6 +12,6 @@ data class Product(
     val seller: Int,
     val category: Int,
     val sizes: List<String>,
-    var selectedSize: String? = null, // Adding the selected size property
-    var isSelected: Boolean = false   // Adding isSelected property to manage selection state
+    var selectedSize: String? = null,
+    var isSelected: Boolean = false
 ) : Serializable

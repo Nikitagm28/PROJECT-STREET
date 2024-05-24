@@ -10,14 +10,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Находим кнопку по ID
+
         val enterButton = findViewById<Button>(R.id.login_button)
 
-        // Устанавливаем слушатель нажатия на кнопку
         enterButton.setOnClickListener {
-            // Создаем намерение для запуска LoginActivity
             val brandsIntent = Intent(this, BasicActivity::class.java)
-            // Запускаем LoginActivity
             startActivity(brandsIntent)
         }
     }

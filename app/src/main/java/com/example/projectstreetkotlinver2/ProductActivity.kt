@@ -33,28 +33,27 @@ class ProductActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("basket_prefs", Context.MODE_PRIVATE)
 
-        // Получение данных о товаре из Intent
+
         product = intent.getSerializableExtra("product") as Product
 
-        // Настройка ViewPager2 с адаптером для изображений
-        viewPager = findViewById(R.id.viewPager)
-        viewPager.adapter = ImageViewPagerAdapter(listOf(product.image)) // Используем URL изображения из продукта
 
-        // Настройка элементов интерфейса
+        viewPager = findViewById(R.id.viewPager)
+        viewPager.adapter = ImageViewPagerAdapter(listOf(product.image))
+
         productName = findViewById(R.id.product_name)
         productPrice = findViewById(R.id.product_price)
         descriptionText = findViewById(R.id.description_text)
         addToCartButton = findViewById(R.id.add_to_cart_button)
 
-        // Установка данных о товаре
+
         productName.text = product.name
         productPrice.text = "${product.price} Р"
         descriptionText.text = product.description
 
-        // Настройка кнопки и текстового поля для описания продукта
+
         val descriptionButton: Button = findViewById(R.id.description_button)
         descriptionButton.setOnClickListener {
-            // Переключение видимости текста описания
+
             if (descriptionText.visibility == View.GONE) {
                 descriptionText.visibility = View.VISIBLE
                 descriptionButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.disup, 0) // Иконка, когда текст видим
@@ -64,7 +63,7 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-        // Настройка выбора размера
+
         val sizeButtons = listOf<Button>(
             findViewById(R.id.sizeXS),
             findViewById(R.id.sizeS),
@@ -79,7 +78,7 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-        // Настройка кнопки "Добавить в корзину"
+
         addToCartButton.setOnClickListener {
             addToCart()
         }
@@ -97,7 +96,7 @@ class ProductActivity : AppCompatActivity() {
 
     private fun addToCart() {
         if (::selectedSize.isInitialized) {
-            // Логика добавления товара с выбранным размером в корзину
+
             product.selectedSize = selectedSize
             saveProductToBasket(product)
             addToCartButton.text = "В корзине"

@@ -19,7 +19,7 @@ class VirtualFittingActivity : AppCompatActivity() {
         val clothingItems = listOf(
             ClothingItem(1, "Джинсы", R.drawable.ava, "Pants"),
             ClothingItem(2, "Футболка", R.drawable.ava, "Top")
-            // Добавьте другие элементы одежды
+
         )
 
         clothingRecyclerView = findViewById(R.id.recycler_view_clothing)

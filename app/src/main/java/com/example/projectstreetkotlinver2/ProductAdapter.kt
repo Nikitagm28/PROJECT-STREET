@@ -37,7 +37,6 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
         holder.productName.text = product.name
         holder.productPrice.text = "${product.price} Р"
 
-        // Set favorite button state
         holder.favoriteButton.isSelected = isFavorite(product)
 
         holder.favoriteButton.setOnClickListener {
@@ -49,7 +48,6 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
             }
         }
 
-        // Обработчик нажатий на элемент
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, ProductActivity::class.java).apply {
