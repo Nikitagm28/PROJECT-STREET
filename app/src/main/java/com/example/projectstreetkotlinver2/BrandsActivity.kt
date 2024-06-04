@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectstreetkotlinver2.network.RetrofitClient
+import com.example.projectstreetkotlinver2.BasicActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,14 +19,13 @@ class BrandsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.item_product) // Обновите здесь макет
+        setContentView(R.layout.item_product) // Убедитесь, что у вас правильный макет
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(this, 2) // Устанавливаем 2 столбца
 
         // Обработка нажатий элементов BottomNavigationView
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.navigation_brands
         bottomNavigation.selectedItemId = R.id.navigation_brands
 
         bottomNavigation.setOnItemSelectedListener { item ->

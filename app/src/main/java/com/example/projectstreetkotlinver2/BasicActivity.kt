@@ -3,20 +3,28 @@ package com.example.projectstreetkotlinver2
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.projectstreetkotlinver2.network.RetrofitClient
+import com.example.projectstreetkotlinver2.network.SellerProfile
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import okhttp3.*
-import java.io.IOException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.*
+import java.io.IOException
 
 class BasicActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var usernameTextView: TextView
+    private lateinit var profileImageView: ImageView
+    private lateinit var brandsLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +32,9 @@ class BasicActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewNewArrivals)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
+        usernameTextView = findViewById(R.id.username_text)
+        profileImageView = findViewById(R.id.profile_image)
+        brandsLayout = findViewById(R.id.brands_layout)
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_home
@@ -55,23 +66,77 @@ class BasicActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+        val savedUsername = sharedPreferences.getString("USERNAME", "")
+
+        fetchUser(savedUsername)
         fetchProducts()
+        fetchNewBrands()
+    }
+
+    private fun fetchUser(username: String?) {
+        if (username.isNullOrEmpty()) {
+            return
+        }
+
+        RetrofitClient.apiService.getUsers().enqueue(object : retrofit2.Callback<List<User>> {
+            override fun onResponse(call: retrofit2.Call<List<User>>, response: retrofit2.Response<List<User>>) {
+                if (response.isSuccessful) {
+                    val users = response.body()
+                    val user = users?.find { it.username == username }
+                    user?.let {
+                        fetchUserProfile(it.id, it.username)
+                    }
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<User>>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    private fun fetchUserProfile(userId: Int, username: String) {
+        RetrofitClient.apiService.getProfiles().enqueue(object : retrofit2.Callback<List<Profile>> {
+            override fun onResponse(call: retrofit2.Call<List<Profile>>, response: retrofit2.Response<List<Profile>>) {
+                if (response.isSuccessful) {
+                    val profiles = response.body()
+                    val profile = profiles?.find { it.user == userId }
+                    profile?.let {
+                        updateUI(it, username)
+                    }
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<Profile>>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    private fun updateUI(profile: Profile, username: String) {
+        usernameTextView.text = username
+        profile.image?.let {
+            Glide.with(this)
+                .load(it)
+                .into(profileImageView)
+        }
     }
 
     private fun fetchProducts() {
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url("http://51.250.54.133:8000/api/products/")
+            .url("https://project-street.mooo.com/api/products/")
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
                 runOnUiThread {
                     Toast.makeText(this@BasicActivity, "Не удалось загрузить товары", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onResponse(call: Call, response: Response) {
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 val responseBody = response.body?.string()
                 if (responseBody != null) {
                     val productsType = object : TypeToken<List<Product>>() {}.type
@@ -83,5 +148,47 @@ class BasicActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun fetchNewBrands() {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://project-street.mooo.com/api/seller-profiles/")
+            .build()
+
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@BasicActivity, "Не удалось загрузить бренды", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                val responseBody = response.body?.string()
+                if (responseBody != null) {
+                    val sellerProfilesType = object : TypeToken<List<SellerProfile>>() {}.type
+                    val sellerProfiles: List<SellerProfile> = Gson().fromJson(responseBody, sellerProfilesType)
+                    runOnUiThread {
+                        updateNewBrands(sellerProfiles)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun updateNewBrands(sellerProfiles: List<SellerProfile>) {
+        brandsLayout.removeAllViews()
+        sellerProfiles.forEach { sellerProfile ->
+            val imageView = ImageView(this)
+            imageView.layoutParams = LinearLayout.LayoutParams(480, 400).apply {
+                setMargins(8, 8, 8, 8)
+            }
+            sellerProfile.image?.let {
+                Glide.with(this)
+                    .load(it)
+                    .into(imageView)
+            }
+            brandsLayout.addView(imageView)
+        }
     }
 }

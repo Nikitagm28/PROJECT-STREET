@@ -32,14 +32,15 @@
                     android:fontFamily="@font/robotobold"
                     android:text="PROJECT STREET"
                     android:textColor="#919191"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:layout_weight="1"/>
 
                 <TextView
-                    android:layout_width="85dp"
+                    android:id="@+id/username_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/robotolight"
-                    android:text="     Никита"
+                    android:text="Имя пользователя  "
                     android:textColor="#000000"
                     android:textSize="16dp" />
 
@@ -81,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Новые бренды"
+                android:text="Бренды"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:fontFamily="@font/robotolight"
@@ -97,26 +98,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:id="@+id/brands_layout">
 
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/saintmob" />
+                         />
 
                     <ImageView
                         android:id="@+id/yumms"
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/yumms" />
+                         />
 
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/temny" />
+                         />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -124,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Новые поступления"
+                android:text="Каталог товаров"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:fontFamily="@font/robotolight"

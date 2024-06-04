@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.projectstreetkotlinver2.ui.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

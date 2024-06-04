@@ -14,3 +14,13 @@ data class User(
     val username: String,
     val email: String
 )
+data class Profile(
+    val id: Int,
+    val image: String?,
+    val user: Int
+)
+data class SellerProfile(
+    val id: Int,
+    val image: String?,
+    val user: Int
+)
