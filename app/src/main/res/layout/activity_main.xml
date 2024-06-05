@@ -38,9 +38,10 @@
                 <TextView
                     android:id="@+id/username_text"
                     android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/robotolight"
-                    android:text="Имя пользователя  "
+                    android:text="    "
                     android:textColor="#000000"
                     android:textSize="16dp" />
 
@@ -48,9 +49,8 @@
                     android:id="@+id/profile_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ava"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="10dp"/>
             </LinearLayout>
 
             <!-- Строка поиска -->
@@ -67,6 +67,7 @@
                     android:src="@drawable/search"/>
 
                 <EditText
+                    android:id="@+id/search_edit_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -75,7 +76,8 @@
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/robotolight"
                     android:textColor="#919191"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:inputType="text"/>
             </LinearLayout>
 
             <!-- Новые бренды -->
@@ -105,20 +107,20 @@
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                         />
+                        />
 
                     <ImageView
                         android:id="@+id/yumms"
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                         />
+                        />
 
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="94dp"
                         android:layout_margin="8dp"
-                         />
+                        />
                 </LinearLayout>
             </HorizontalScrollView>
 

@@ -2,29 +2,41 @@ package com.example.projectstreetkotlinver2
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.projectstreetkotlinver2.network.RetrofitClient
-import com.example.projectstreetkotlinver2.BasicActivity
+import com.example.projectstreetkotlinver2.network.SellerProfile
+import com.example.projectstreetkotlinver2.network.SellerProfileAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
 
 class BrandsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var productAdapter: ProductAdapter
+    private lateinit var brandLogo: ImageView
+    private var sellerId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.item_product) // Убедитесь, что у вас правильный макет
+        setContentView(R.layout.item_product)
 
         recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = GridLayoutManager(this, 2) // Устанавливаем 2 столбца
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        brandLogo = findViewById(R.id.brandLogo)
 
-        // Обработка нажатий элементов BottomNavigationView
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_brands
 
@@ -36,8 +48,7 @@ class BrandsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_brands -> {
-                    val intent = Intent(this, BrandsActivity::class.java)
-                    startActivity(intent)
+                    fetchAllBrands()
                     true
                 }
                 R.id.navigation_basket -> {
@@ -54,24 +65,92 @@ class BrandsActivity : AppCompatActivity() {
             }
         }
 
-        fetchProducts()
+        sellerId = intent.getIntExtra("sellerId", -1)
+        if (sellerId != -1) {
+            fetchProductsForSeller(sellerId!!)
+        } else {
+            fetchAllBrands()
+        }
     }
 
-    private fun fetchProducts() {
-        val apiService = RetrofitClient.apiService
-        apiService.getProducts().enqueue(object : Callback<List<Product>> {
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { products ->
+    private fun fetchProductsForSeller(sellerId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val products = fetchProducts().filter { it.seller == sellerId }
+                val sellerProfiles = fetchSellerProfiles()
+                val sellerProfile = sellerProfiles.find { it.user == sellerId }
+
+                withContext(Dispatchers.Main) {
+                    if (products.isNotEmpty()) {
                         productAdapter = ProductAdapter(products)
                         recyclerView.adapter = productAdapter
+                    } else {
+                        Toast.makeText(this@BrandsActivity, "Нет товаров для данного продавца", Toast.LENGTH_SHORT).show()
+                    }
+
+                    sellerProfile?.let {
+                        Glide.with(this@BrandsActivity)
+                            .load(it.image)
+                            .into(brandLogo)
                     }
                 }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    e.printStackTrace()
+                    Toast.makeText(this@BrandsActivity, "Не удалось загрузить данные", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                t.printStackTrace()
+    private fun fetchAllBrands() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val sellerProfiles = fetchSellerProfiles()
+                withContext(Dispatchers.Main) {
+                    val brandAdapter = SellerProfileAdapter(sellerProfiles)
+                    recyclerView.adapter = brandAdapter
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    e.printStackTrace()
+                    Toast.makeText(this@BrandsActivity, "Не удалось загрузить бренды", Toast.LENGTH_SHORT).show()
+                }
             }
-        })
+        }
+    }
+
+    private suspend fun fetchProducts(): List<Product> {
+        return withContext(Dispatchers.IO) {
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://project-street.mooo.com/api/products/")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+                val productsType = object : TypeToken<List<Product>>() {}.type
+                Gson().fromJson(responseBody, productsType)
+            }
+        }
+    }
+
+    private suspend fun fetchSellerProfiles(): List<SellerProfile> {
+        return withContext(Dispatchers.IO) {
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://project-street.mooo.com/api/seller-profiles/")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+                val sellerProfilesType = object : TypeToken<List<SellerProfile>>() {}.type
+                Gson().fromJson(responseBody, sellerProfilesType)
+            }
+        }
     }
 }

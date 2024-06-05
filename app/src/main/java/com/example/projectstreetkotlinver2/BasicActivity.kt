@@ -2,6 +2,9 @@ package com.example.projectstreetkotlinver2
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -25,6 +28,8 @@ class BasicActivity : AppCompatActivity() {
     private lateinit var usernameTextView: TextView
     private lateinit var profileImageView: ImageView
     private lateinit var brandsLayout: LinearLayout
+    private lateinit var searchEditText: EditText
+    private lateinit var products: List<Product>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,7 @@ class BasicActivity : AppCompatActivity() {
         usernameTextView = findViewById(R.id.username_text)
         profileImageView = findViewById(R.id.profile_image)
         brandsLayout = findViewById(R.id.brands_layout)
+        searchEditText = findViewById(R.id.search_edit_text)
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_home
@@ -72,6 +78,16 @@ class BasicActivity : AppCompatActivity() {
         fetchUser(savedUsername)
         fetchProducts()
         fetchNewBrands()
+
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterProducts(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun fetchUser(username: String?) {
@@ -140,7 +156,7 @@ class BasicActivity : AppCompatActivity() {
                 val responseBody = response.body?.string()
                 if (responseBody != null) {
                     val productsType = object : TypeToken<List<Product>>() {}.type
-                    val products: List<Product> = Gson().fromJson(responseBody, productsType)
+                    products = Gson().fromJson(responseBody, productsType)
                     runOnUiThread {
                         val adapter = ProductAdapter(products)
                         recyclerView.adapter = adapter
@@ -188,7 +204,18 @@ class BasicActivity : AppCompatActivity() {
                     .load(it)
                     .into(imageView)
             }
+            imageView.setOnClickListener {
+                val intent = Intent(this, BrandsActivity::class.java)
+                intent.putExtra("sellerId", sellerProfile.user)
+                startActivity(intent)
+            }
             brandsLayout.addView(imageView)
         }
+    }
+
+    private fun filterProducts(query: String) {
+        val filteredProducts = products.filter { it.name.contains(query, ignoreCase = true) }
+        val adapter = ProductAdapter(filteredProducts)
+        recyclerView.adapter = adapter
     }
 }

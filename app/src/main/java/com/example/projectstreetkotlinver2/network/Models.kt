@@ -19,6 +19,7 @@ data class Profile(
     val image: String?,
     val user: Int
 )
+
 data class SellerProfile(
     val id: Int,
     val image: String?,
