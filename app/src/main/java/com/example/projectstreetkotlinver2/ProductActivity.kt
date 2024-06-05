@@ -26,6 +26,7 @@ class ProductActivity : AppCompatActivity() {
     private lateinit var selectedSize: String
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var addToCartButton: Button
+    private lateinit var addToLookBookButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +34,7 @@ class ProductActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("basket_prefs", Context.MODE_PRIVATE)
 
-
         product = intent.getSerializableExtra("product") as Product
-
 
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = ImageViewPagerAdapter(listOf(product.image))
@@ -44,16 +43,14 @@ class ProductActivity : AppCompatActivity() {
         productPrice = findViewById(R.id.product_price)
         descriptionText = findViewById(R.id.description_text)
         addToCartButton = findViewById(R.id.add_to_cart_button)
-
+        addToLookBookButton = findViewById(R.id.add_to_lookbook_button)
 
         productName.text = product.name
         productPrice.text = "${product.price} Р"
         descriptionText.text = product.description
 
-
         val descriptionButton: Button = findViewById(R.id.description_button)
         descriptionButton.setOnClickListener {
-
             if (descriptionText.visibility == View.GONE) {
                 descriptionText.visibility = View.VISIBLE
                 descriptionButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.disup, 0) // Иконка, когда текст видим
@@ -62,7 +59,6 @@ class ProductActivity : AppCompatActivity() {
                 descriptionButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.disdown, 0) // Иконка, когда текст скрыт
             }
         }
-
 
         val sizeButtons = listOf<Button>(
             findViewById(R.id.sizeXS),
@@ -78,9 +74,12 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-
         addToCartButton.setOnClickListener {
             addToCart()
+        }
+
+        addToLookBookButton.setOnClickListener {
+            addToLookBook()
         }
     }
 
@@ -96,10 +95,11 @@ class ProductActivity : AppCompatActivity() {
 
     private fun addToCart() {
         if (::selectedSize.isInitialized) {
-
             product.selectedSize = selectedSize
             saveProductToBasket(product)
             addToCartButton.text = "В корзине"
+        } else {
+            Toast.makeText(this, "Пожалуйста, выберите размер", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -112,6 +112,32 @@ class ProductActivity : AppCompatActivity() {
 
     private fun getBasketItems(): List<Product> {
         val json = sharedPreferences.getString("basket_items", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<Product>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            emptyList()
+        }
+    }
+
+    private fun addToLookBook() {
+        saveProductToLookBook(product)
+        Toast.makeText(this, "Товар добавлен в LookBook", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveProductToLookBook(product: Product) {
+        val lookBookItems = getLookBookItems().toMutableList()
+        if (!lookBookItems.any { it.id == product.id }) {
+            lookBookItems.add(product)
+            val json = Gson().toJson(lookBookItems)
+            sharedPreferences.edit().putString("lookbook_items", json).apply()
+        } else {
+            Toast.makeText(this, "Этот товар уже добавлен в LookBook", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getLookBookItems(): List<Product> {
+        val json = sharedPreferences.getString("lookbook_items", null)
         return if (json != null) {
             val type = object : TypeToken<List<Product>>() {}.type
             Gson().fromJson(json, type)

@@ -13,6 +13,7 @@
     <string name="profile">Профиль</string>
 
     <string name="add">Добавить в корзину</string>
-
+    <string name="create_outfit">Создать образ</string>
+    <string name="clear_outfit">Очистить образ</string>
 
 </resources>
