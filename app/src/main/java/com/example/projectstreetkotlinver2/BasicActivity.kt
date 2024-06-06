@@ -29,12 +29,13 @@ class BasicActivity : AppCompatActivity() {
     private lateinit var profileImageView: ImageView
     private lateinit var brandsLayout: LinearLayout
     private lateinit var searchEditText: EditText
-    private lateinit var products: List<Product>
+    private var products: List<Product> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Инициализация UI элементов
         recyclerView = findViewById(R.id.recyclerViewNewArrivals)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         usernameTextView = findViewById(R.id.username_text)
@@ -42,6 +43,7 @@ class BasicActivity : AppCompatActivity() {
         brandsLayout = findViewById(R.id.brands_layout)
         searchEditText = findViewById(R.id.search_edit_text)
 
+        // Настройка нижней навигации
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.navigation_home
         bottomNavigation.setOnItemSelectedListener { item ->
@@ -66,19 +68,23 @@ class BasicActivity : AppCompatActivity() {
             }
         }
 
+        // Настройка клика для перехода на бренды
         val yummsImageView: ImageView = findViewById(R.id.yumms)
         yummsImageView.setOnClickListener {
             val intent = Intent(this, BrandsActivity::class.java)
             startActivity(intent)
         }
 
+        // Получение сохраненного имени пользователя
         val sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         val savedUsername = sharedPreferences.getString("USERNAME", "")
 
+        // Загрузка данных пользователя, продуктов и новых брендов
         fetchUser(savedUsername)
         fetchProducts()
         fetchNewBrands()
 
+        // Настройка поиска продуктов
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 

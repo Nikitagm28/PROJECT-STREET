@@ -1,69 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/create_lookbook_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Создать образ"
-        android:textSize="24sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LookBookActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lookBookRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/create_lookbook_title"
-        android:layout_marginTop="16dp"
-        android:padding="8dp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:id="@+id/drag_area"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/lookBookRecyclerView"
-        android:layout_above="@id/clear_lookbook_button"
-        android:layout_marginTop="16dp">
+        android:layout_height="400dp"
+        android:background="@android:color/darker_gray" />
 
-        <!-- Поле для добавления товаров -->
-        <ImageView
-            android:id="@+id/dragged_item_1"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true" />
-
-        <ImageView
-            android:id="@+id/dragged_item_2"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/dragged_item_1"
-            android:layout_marginTop="16dp" />
-
-        <ImageView
-            android:id="@+id/dragged_item_3"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/dragged_item_2"
-            android:layout_marginTop="16dp" />
-
-        <!-- Добавьте дополнительные ImageView по мере необходимости -->
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/clear_lookbook_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Очистить образы"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/clear_lookbook_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистить образы" />
+
+        <Button
+            android:id="@+id/save_lookbook_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить образы" />
+
+        <Button
+            android:id="@+id/my_looks_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Мои образы" />
+    </LinearLayout>
+</LinearLayout>
