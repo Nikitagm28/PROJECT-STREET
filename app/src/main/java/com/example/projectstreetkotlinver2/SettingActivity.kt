@@ -32,7 +32,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.text_order_lookbook).setOnClickListener {
-            val intent = Intent(this, LookBookActivity::class.java)
+            val intent = Intent(this, MyLooksActivity::class.java)
             startActivity(intent)
         }
 
