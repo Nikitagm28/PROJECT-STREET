@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#AA000000"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/overlay_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="16dp">
+
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:text="Поделиться"
+            android:background="@drawable/button_obr_check"
+            android:drawableRight="@drawable/share_lent"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/robotobold"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/robotobold"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:text="Удалить"
+            android:background="@drawable/button_obr_check"
+            android:drawableRight="@drawable/delete_obr"
+            android:drawablePadding="8dp"
+            android:padding="8dp"/>
+    </LinearLayout>
+</LinearLayout>

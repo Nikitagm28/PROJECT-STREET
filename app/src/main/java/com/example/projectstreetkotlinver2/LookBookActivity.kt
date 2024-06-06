@@ -2,8 +2,6 @@ package com.example.projectstreetkotlinver2
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.view.DragEvent
@@ -18,11 +16,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
-import java.io.ByteArrayOutputStream
 
 data class LookBookItem(
     val imageUrl: String,
@@ -36,7 +34,6 @@ class LookBookActivity : AppCompatActivity() {
     private lateinit var dragArea: RelativeLayout
     private lateinit var clearLookbookButton: Button
     private lateinit var saveLookbookButton: Button
-    private lateinit var myLooksButton: Button
     private val draggedItems = mutableListOf<LookBookItem>()
     private val db = FirebaseFirestore.getInstance()
 
@@ -48,7 +45,6 @@ class LookBookActivity : AppCompatActivity() {
         dragArea = findViewById(R.id.drag_area)
         clearLookbookButton = findViewById(R.id.clear_lookbook_button)
         saveLookbookButton = findViewById(R.id.save_lookbook_button)
-        myLooksButton = findViewById(R.id.my_looks_button)
 
         clearLookbookButton.setOnClickListener {
             clearLookBook()
@@ -58,17 +54,38 @@ class LookBookActivity : AppCompatActivity() {
             saveLookBook()
         }
 
-        myLooksButton.setOnClickListener {
-            val intent = Intent(this, MyLooksActivity::class.java)
-            startActivity(intent)
-        }
-
         val lookBookItems = getLookBookItems()
         lookBookRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         lookBookRecyclerView.adapter = LookBookAdapter(lookBookItems)
 
         setupDragListeners(dragArea)
+
+        // Настройка BottomNavigationView
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation_create)
+        bottomNavigation.selectedItemId = R.id.navigation_create
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_create)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_my_looks -> {
+                    startActivity(Intent(this, MyLooksActivity::class.java))
+                    true
+                }
+                R.id.navigation_create -> {
+                    // текущий экран
+                    true
+                }
+                R.id.navigation_feed -> {
+                    // переход на экран ленты
+                    true
+                }
+                R.id.navigation_favorites -> {
+                    // переход на экран избранного
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun getLookBookItems(): List<Product> {
@@ -85,7 +102,6 @@ class LookBookActivity : AppCompatActivity() {
     private fun clearLookBook() {
         draggedItems.clear()
         dragArea.removeAllViews()
-        Toast.makeText(this, "Образы очищены", Toast.LENGTH_SHORT).show()
     }
 
     private fun addDraggedItemToView(lookBookItem: LookBookItem) {
@@ -156,31 +172,17 @@ class LookBookActivity : AppCompatActivity() {
                         "x" to item.x,
                         "y" to item.y
                     )
-                },
-                "image" to saveImage() // Сохраняем образ в виде картинки
+                }
             )
 
             db.collection("lookbooks")
                 .add(lookbookData)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "LookBook saved successfully!", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error saving LookBook: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            Toast.makeText(this, "Username not found", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun saveImage(): String {
-        val bitmap = Bitmap.createBitmap(dragArea.width, dragArea.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        dragArea.draw(canvas)
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray = stream.toByteArray()
-        return android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT)
     }
 
     inner class LookBookAdapter(private val items: List<Product>) :

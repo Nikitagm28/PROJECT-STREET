@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_my_looks"
+        android:icon="@drawable/home"
+        android:title="Мои образы" />
+    <item
+        android:id="@+id/navigation_create"
+        android:icon="@drawable/brands"
+        android:title="Создать" />
+    <item
+        android:id="@+id/navigation_feed"
+        android:icon="@drawable/lenta"
+        android:title="Лента" />
+    <item
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/isbr"
+        android:title="Избранное" />
+</menu>
