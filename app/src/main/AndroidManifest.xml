@@ -29,6 +29,9 @@
         <activity android:name=".FavoritesActivity"/>
         <activity android:name=".LookBookActivity"/>
         <activity android:name=".MyLooksActivity"/>
+        <activity android:name=".FeedActivity"/>
+        <activity android:name=".SavedLooksActivity"/>
+        <activity android:name=".RegisterActivity"/>
 
 
 

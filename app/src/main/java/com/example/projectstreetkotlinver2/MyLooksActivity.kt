@@ -10,16 +10,16 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.projectstreetkotlinver2.network.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 
 class MyLooksActivity : AppCompatActivity() {
@@ -28,6 +28,8 @@ class MyLooksActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: LookBookItemAdapter
     private lateinit var overlayContainer: FrameLayout
+    private lateinit var usernameTextView: TextView
+    private lateinit var profileImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +37,24 @@ class MyLooksActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.myLooksRecyclerView)
         overlayContainer = findViewById(R.id.overlay_container)
-        recyclerView.layoutManager = GridLayoutManager(this, 2) // Display items in a grid
+        usernameTextView = findViewById(R.id.username_text)
+        profileImageView = findViewById(R.id.profile_image)
+        recyclerView.layoutManager = GridLayoutManager(this, 2) // Отображение элементов в виде сетки
 
+        loadUserProfile()
         loadLookBooks()
 
         // Настройка BottomNavigationView
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_create)
+        bottomNavigationView.selectedItemId = R.id.navigation_my_looks
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_my_looks -> {
                     // текущий экран
+                    true
+                }
+                R.id.navigation_back -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
                     true
                 }
                 R.id.navigation_create -> {
@@ -52,15 +62,65 @@ class MyLooksActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_feed -> {
-                    // переход на экран ленты
+                    startActivity(Intent(this, FeedActivity::class.java))
                     true
                 }
                 R.id.navigation_favorites -> {
-                    // переход на экран избранного
+                    startActivity(Intent(this, SavedLooksActivity::class.java))
                     true
                 }
                 else -> false
             }
+        }
+    }
+
+    private fun loadUserProfile() {
+        val sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        val savedUsername = sharedPreferences.getString("USERNAME", "")
+
+        if (!savedUsername.isNullOrEmpty()) {
+            RetrofitClient.apiService.getUsers().enqueue(object : retrofit2.Callback<List<User>> {
+                override fun onResponse(call: retrofit2.Call<List<User>>, response: retrofit2.Response<List<User>>) {
+                    if (response.isSuccessful) {
+                        val users = response.body()
+                        val user = users?.find { it.username == savedUsername }
+                        user?.let {
+                            fetchUserProfile(it.id, it.username)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: retrofit2.Call<List<User>>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        }
+    }
+
+    private fun fetchUserProfile(userId: Int, username: String) {
+        RetrofitClient.apiService.getProfiles().enqueue(object : retrofit2.Callback<List<Profile>> {
+            override fun onResponse(call: retrofit2.Call<List<Profile>>, response: retrofit2.Response<List<Profile>>) {
+                if (response.isSuccessful) {
+                    val profiles = response.body()
+                    val profile = profiles?.find { it.user == userId }
+                    profile?.let {
+                        updateUI(it, username)
+                    }
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<Profile>>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    private fun updateUI(profile: Profile, username: String) {
+        usernameTextView.text = username
+        profile.image?.let {
+            Glide.with(this)
+                .load(it)
+                .into(profileImageView)
         }
     }
 
@@ -78,10 +138,10 @@ class MyLooksActivity : AppCompatActivity() {
                     recyclerView.adapter = adapter
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error loading LookBooks: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Ошибка загрузки образов: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            Toast.makeText(this, "Username not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Имя пользователя не найдено", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -129,8 +189,8 @@ class MyLooksActivity : AppCompatActivity() {
                 val layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     300
-                ) // увеличьте или уменьшите значение 300 по необходимости
-                layoutParams.topMargin = 8 // уменьшите значение для уменьшения расстояния между элементами
+                )
+                layoutParams.topMargin = 8
                 imageView.layoutParams = layoutParams
                 Picasso.get().load(item.imageUrl).into(imageView)
                 holder.lookBookContainer.addView(imageView)
@@ -162,7 +222,7 @@ class MyLooksActivity : AppCompatActivity() {
         }
 
         shareButton.setOnClickListener {
-            // код для кнопки "Поделиться"
+            shareLookBook(lookBookItems)
         }
 
         deleteButton.setOnClickListener {
@@ -173,6 +233,36 @@ class MyLooksActivity : AppCompatActivity() {
 
         overlayContainer.setOnClickListener {
             overlayContainer.visibility = View.GONE
+        }
+    }
+
+    private fun shareLookBook(lookBookItems: List<LookBookItem>) {
+        val sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        val username = sharedPreferences.getString("USERNAME", null)
+
+        if (username != null) {
+            val lookbookData = hashMapOf(
+                "username" to username,
+                "lookBookItems" to lookBookItems.map { item ->
+                    mapOf(
+                        "imageUrl" to item.imageUrl,
+                        "x" to item.x,
+                        "y" to item.y
+                    )
+                },
+                "likeCount" to 0
+            )
+
+            db.collection("feed_lookbooks")
+                .add(lookbookData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Образ успешно добавлен в ленту!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Ошибка при добавлении образа в ленту: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "Имя пользователя не найдено", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -202,11 +292,11 @@ class MyLooksActivity : AppCompatActivity() {
                             if (match) {
                                 db.collection("lookbooks").document(document.id).delete()
                                     .addOnSuccessListener {
-                                        Toast.makeText(this, "LookBook deleted successfully", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "Образ успешно удален", Toast.LENGTH_SHORT).show()
                                         loadLookBooks()
                                     }
                                     .addOnFailureListener { e ->
-                                        Toast.makeText(this, "Error deleting LookBook: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "Ошибка при удалении образа: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 break
                             }
@@ -214,7 +304,7 @@ class MyLooksActivity : AppCompatActivity() {
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error finding LookBook: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Ошибка при поиске образа: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

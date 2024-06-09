@@ -2,13 +2,15 @@ package com.example.projectstreetkotlinver2.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projectstreetkotlinver2.BasicActivity
-import com.example.projectstreetkotlinver2.BasketActivity
 import com.example.projectstreetkotlinver2.R
+import com.example.projectstreetkotlinver2.RegisterActivity
 import com.example.projectstreetkotlinver2.network.RetrofitClient
 import com.example.projectstreetkotlinver2.network.UserLoginRequest
 import com.example.projectstreetkotlinver2.network.UserLoginResponse
@@ -20,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var registerButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.username)
         passwordEditText = findViewById(R.id.password)
         loginButton = findViewById(R.id.login_button)
+        registerButton = findViewById(R.id.register_button)
 
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
@@ -38,6 +42,11 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please enter username and password", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        registerButton.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -51,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
                         saveCredentials(username, loginResponse.access)
+                        Log.d("LoginActivity", "Saved username: $username, token: ${loginResponse.access}")
                         navigateToMainScreen()
                     }
                 } else {

@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.projectstreetkotlinver2.network.RetrofitClient
-import com.example.projectstreetkotlinver2.network.SellerProfile
-import com.example.projectstreetkotlinver2.network.SellerProfileAdapter
+import com.example.projectstreetkotlinver2.network.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -25,13 +23,12 @@ import java.io.IOException
 class BrandsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var productAdapter: ProductAdapter
     private lateinit var brandLogo: ImageView
     private var sellerId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.item_product)
+        setContentView(R.layout.activity_brands) // Используем правильный макет
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -48,7 +45,7 @@ class BrandsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_brands -> {
-                    fetchAllBrands()
+                    fetchAllEvents()
                     true
                 }
                 R.id.navigation_basket -> {
@@ -69,7 +66,7 @@ class BrandsActivity : AppCompatActivity() {
         if (sellerId != -1) {
             fetchProductsForSeller(sellerId!!)
         } else {
-            fetchAllBrands()
+            fetchAllEvents() // Fetch events if navigated through menu
         }
     }
 
@@ -82,7 +79,7 @@ class BrandsActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     if (products.isNotEmpty()) {
-                        productAdapter = ProductAdapter(products)
+                        val productAdapter = ProductAdapter(products)
                         recyclerView.adapter = productAdapter
                     } else {
                         Toast.makeText(this@BrandsActivity, "Нет товаров для данного продавца", Toast.LENGTH_SHORT).show()
@@ -103,18 +100,19 @@ class BrandsActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchAllBrands() {
+    private fun fetchAllEvents() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val sellerProfiles = fetchSellerProfiles()
+                val events = fetchEvents()
+                val users = fetchUsers()
                 withContext(Dispatchers.Main) {
-                    val brandAdapter = SellerProfileAdapter(sellerProfiles)
-                    recyclerView.adapter = brandAdapter
+                    val eventAdapter = EventAdapter(events, users)
+                    recyclerView.adapter = eventAdapter
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     e.printStackTrace()
-                    Toast.makeText(this@BrandsActivity, "Не удалось загрузить бренды", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@BrandsActivity, "Не удалось загрузить события", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -150,6 +148,40 @@ class BrandsActivity : AppCompatActivity() {
                 val responseBody = response.body?.string()
                 val sellerProfilesType = object : TypeToken<List<SellerProfile>>() {}.type
                 Gson().fromJson(responseBody, sellerProfilesType)
+            }
+        }
+    }
+
+    private suspend fun fetchEvents(): List<Event> {
+        return withContext(Dispatchers.IO) {
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://project-street.mooo.com/api/events/")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+                val eventsType = object : TypeToken<List<Event>>() {}.type
+                Gson().fromJson(responseBody, eventsType)
+            }
+        }
+    }
+
+    private suspend fun fetchUsers(): List<User> {
+        return withContext(Dispatchers.IO) {
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://project-street.mooo.com/api/users/")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val responseBody = response.body?.string()
+                val usersType = object : TypeToken<List<User>>() {}.type
+                Gson().fromJson(responseBody, usersType)
             }
         }
     }

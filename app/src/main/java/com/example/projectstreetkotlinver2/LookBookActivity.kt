@@ -64,8 +64,7 @@ class LookBookActivity : AppCompatActivity() {
         // Настройка BottomNavigationView
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation_create)
         bottomNavigation.selectedItemId = R.id.navigation_create
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_create)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_my_looks -> {
                     startActivity(Intent(this, MyLooksActivity::class.java))
@@ -75,12 +74,16 @@ class LookBookActivity : AppCompatActivity() {
                     // текущий экран
                     true
                 }
+                R.id.navigation_back -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
+                    true
+                }
                 R.id.navigation_feed -> {
-                    // переход на экран ленты
+                    startActivity(Intent(this, FeedActivity::class.java))
                     true
                 }
                 R.id.navigation_favorites -> {
-                    // переход на экран избранного
+                    startActivity(Intent(this, SavedLooksActivity::class.java))
                     true
                 }
                 else -> false
@@ -178,10 +181,13 @@ class LookBookActivity : AppCompatActivity() {
             db.collection("lookbooks")
                 .add(lookbookData)
                 .addOnSuccessListener {
+                    Toast.makeText(this, "Образ успешно сохранен!", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
+                    Toast.makeText(this, "Ошибка при сохранении образа: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         } else {
+            Toast.makeText(this, "Имя пользователя не найдено", Toast.LENGTH_SHORT).show()
         }
     }
 

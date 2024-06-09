@@ -13,5 +13,9 @@ data class Product(
     val category: Int,
     val sizes: List<String>,
     var selectedSize: String? = null,
-    var isSelected: Boolean = false
+    var isSelected: Boolean = false,
+    var brand: String? = null,
+    val sellerId: Int,
+    var sellerUsername: String?,
+    var quantity: Int = 1
 ) : Serializable

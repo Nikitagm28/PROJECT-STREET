@@ -1,19 +1,24 @@
 package com.example.projectstreetkotlinver2
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.squareup.picasso.Picasso
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 
 class ProductActivity : AppCompatActivity() {
 
@@ -96,8 +101,13 @@ class ProductActivity : AppCompatActivity() {
     private fun addToCart() {
         if (::selectedSize.isInitialized) {
             product.selectedSize = selectedSize
+            product.quantity = 1 // Устанавливаем количество в 1 при добавлении в корзину
             saveProductToBasket(product)
             addToCartButton.text = "В корзине"
+            addToCartButton.setOnClickListener {
+                val intent = Intent(this, BasketActivity::class.java)
+                startActivity(intent)
+            }
         } else {
             Toast.makeText(this, "Пожалуйста, выберите размер", Toast.LENGTH_SHORT).show()
         }
@@ -108,6 +118,11 @@ class ProductActivity : AppCompatActivity() {
         basketItems.add(product)
         val json = Gson().toJson(basketItems)
         sharedPreferences.edit().putString("basket_items", json).apply()
+
+        val username = getUsernameFromPrefs()
+        if (!username.isNullOrEmpty()) {
+            FirebaseFirestore.getInstance().collection("basket_items").document(username).set(mapOf("items" to json))
+        }
     }
 
     private fun getBasketItems(): List<Product> {
@@ -118,6 +133,11 @@ class ProductActivity : AppCompatActivity() {
         } else {
             emptyList()
         }
+    }
+
+    private fun getUsernameFromPrefs(): String? {
+        val sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("USERNAME", "")
     }
 
     private fun addToLookBook() {

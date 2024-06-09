@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,6 +18,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectstreetkotlinver2.BasicActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
@@ -31,6 +33,7 @@ class BasketActivity : AppCompatActivity() {
     private lateinit var tvCheckoutItemCount: TextView
     private lateinit var tvCheckoutTotalPrice: TextView
     private lateinit var bottomNavigation: BottomNavigationView
+    private val db = FirebaseFirestore.getInstance()
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,13 +77,43 @@ class BasketActivity : AppCompatActivity() {
     }
 
     private fun loadBasketItems() {
+        val username = getUsernameFromPrefs()
+        if (username.isNullOrEmpty()) {
+            showEmptyView()
+            return
+        }
+
+        db.collection("basket_items").document(username).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val basketItemsJson = document.getString("items")
+                    if (basketItemsJson != null) {
+                        val basketItems: List<Product> = Gson().fromJson(basketItemsJson, object : TypeToken<List<Product>>() {}.type)
+                        updateBasketItems(basketItems)
+                    } else {
+                        showEmptyView()
+                    }
+                } else {
+                    showEmptyView()
+                }
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
+                showEmptyView()
+            }
+    }
+
+    private fun showEmptyView() {
+        emptyView.visibility = View.VISIBLE
+        scrollView.visibility = View.GONE
+        checkoutCard.visibility = View.GONE
+    }
+
+    private fun updateBasketItems(basketItems: List<Product>) {
         basketItemsContainer.removeAllViews()
-        val basketItems = getBasketItems()
 
         if (basketItems.isEmpty()) {
-            emptyView.visibility = View.VISIBLE
-            scrollView.visibility = View.GONE
-            checkoutCard.visibility = View.GONE
+            showEmptyView()
         } else {
             emptyView.visibility = View.GONE
             scrollView.visibility = View.VISIBLE
@@ -95,10 +128,14 @@ class BasketActivity : AppCompatActivity() {
                 val productPrice = itemView.findViewById<TextView>(R.id.product_price)
                 val productDelete = itemView.findViewById<ImageView>(R.id.product_delete)
                 val productSelected = itemView.findViewById<CheckBox>(R.id.product_selected)
+                val buttonDecrease = itemView.findViewById<Button>(R.id.button_decrease)
+                val buttonIncrease = itemView.findViewById<Button>(R.id.button_increase)
+                val quantityText = itemView.findViewById<TextView>(R.id.quantity_text)
 
                 productTitle.text = item.name
                 productSize.text = item.selectedSize ?: ""
                 productPrice.text = "${item.price} Р"
+                quantityText.text = item.quantity.toString()
 
                 Picasso.get().load(item.image).into(productImage)
 
@@ -109,6 +146,26 @@ class BasketActivity : AppCompatActivity() {
 
                 productDelete.setOnClickListener {
                     removeItemFromBasket(item)
+                }
+
+                buttonDecrease.setOnClickListener {
+                    var quantity = item.quantity
+                    if (quantity > 1) {
+                        quantity--
+                        item.quantity = quantity
+                        quantityText.text = quantity.toString()
+                        updateCheckoutInfo()
+                        saveBasketItems(basketItems)
+                    }
+                }
+
+                buttonIncrease.setOnClickListener {
+                    var quantity = item.quantity
+                    quantity++
+                    item.quantity = quantity
+                    quantityText.text = quantity.toString()
+                    updateCheckoutInfo()
+                    saveBasketItems(basketItems)
                 }
 
                 basketItemsContainer.addView(itemView)
@@ -126,9 +183,11 @@ class BasketActivity : AppCompatActivity() {
             val productSelected = itemView.findViewById<CheckBox>(R.id.product_selected)
             if (productSelected.isChecked) {
                 val productPrice = itemView.findViewById<TextView>(R.id.product_price)
+                val quantityText = itemView.findViewById<TextView>(R.id.quantity_text)
                 val price = productPrice.text.toString().replace(" Р", "").toInt()
-                totalPrice += price
-                itemCount++
+                val quantity = quantityText.text.toString().toInt()
+                totalPrice += price * quantity
+                itemCount += quantity
             }
         }
 
@@ -140,12 +199,17 @@ class BasketActivity : AppCompatActivity() {
         val basketItems = getBasketItems().toMutableList()
         basketItems.remove(item)
         saveBasketItems(basketItems)
-        loadBasketItems()
+        updateBasketItems(basketItems)
     }
 
     private fun saveBasketItems(basketItems: List<Product>) {
         val json = Gson().toJson(basketItems)
         sharedPreferences.edit().putString("basket_items", json).apply()
+
+        val username = getUsernameFromPrefs()
+        if (!username.isNullOrEmpty()) {
+            db.collection("basket_items").document(username).set(mapOf("items" to json))
+        }
     }
 
     private fun getBasketItems(): List<Product> {
@@ -156,5 +220,10 @@ class BasketActivity : AppCompatActivity() {
         } else {
             emptyList()
         }
+    }
+
+    private fun getUsernameFromPrefs(): String? {
+        val sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("USERNAME", "")
     }
 }

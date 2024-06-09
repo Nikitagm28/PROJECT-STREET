@@ -1,56 +1,73 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
-    android:padding="16dp">
+    tools:context=".LookBookActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lookBookRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:scrollbars="horizontal" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <RelativeLayout
-        android:id="@+id/drag_area"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        android:elevation="4dp" />
-    <Button
-        android:id="@+id/save_lookbook_button"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/robotobold"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_add"
-        android:text="Сохранить образ" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lookBookRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scrollbars="horizontal" />
 
-    <Button
-        android:id="@+id/clear_lookbook_button"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/robotobold"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_delete_obr"
-        android:text="Очистить образы" />
+        <RelativeLayout
+            android:id="@+id/drag_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:padding="16dp"
+            android:elevation="4dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <Button
+                android:id="@+id/save_lookbook_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_add"
+                android:fontFamily="@font/robotobold"
+                android:text="Сохранить образ"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/clear_lookbook_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_delete_obr"
+                android:fontFamily="@font/robotobold"
+                android:text="Очистить образы"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="#FFFFFF"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         app:menu="@menu/bottom_navigation_menu_create" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

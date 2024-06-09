@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/navigation_back"
+        android:icon="@drawable/lk"
+        android:title="" />
+    <item
         android:id="@+id/navigation_my_looks"
         android:icon="@drawable/home"
         android:title="Мои образы" />
